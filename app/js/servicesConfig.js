@@ -21,6 +21,12 @@ define([], function () {
 		},
 		PLAN: {
 			'getList': '/plan/plist'
+		},
+		TEST: {
+			'getTableData': {
+				method: 'get',
+				url: '/test/groupTable'	
+			}
 		}
 
 	};

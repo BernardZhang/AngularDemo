@@ -153,6 +153,15 @@ define(['app', 'BaseModel', 'ZTree'], function(app, BaseModel, ZTree) {
             //     setTitle();
             //     count();
             // });
+
+
+
+            var model = new BaseModel(SERVICESCONFIG.TEST);
+
+            model.getTableData({}, function (data) {
+                $scope.groupTable = data;
+                console.log($scope.groupTable);
+            }, null, this);
     
         }
     ]);

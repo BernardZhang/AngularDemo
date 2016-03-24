@@ -1,3 +1,65 @@
+<style>
+    td input {
+        border: none !important;
+        height: 100% !important;
+        width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        box-shadow: none !important;
+        padding: 0 5px !important;
+        box-sizing: border-box;
+    }
+
+    th.group {
+        font-size: 0;
+    }
+    th.group {
+        width: 400px;
+        padding: 0;
+    }
+    th.group span {
+        display: inline-block;
+        width: 25%;
+        /*overflow: hidden;*/
+        /*white-space: nowrap;*/
+        text-overflow: ellipsis;
+        font-size: 14px;
+        height: 100%;
+        vertical-align: top;
+        border-right: 1px solid #ddd;
+        box-sizing: border-box;
+        line-height: 28px;
+        text-align: left;
+        padding-left: 5px;
+    }
+
+    th.group span:last-child {
+        border-right: 0;
+    }
+
+    td {
+        padding: 0 !important;
+        height: 30px;
+        line-height: 30px;
+    }
+
+    td div {
+        height: 100%;
+        font-size: 0;
+    }
+
+    table tr td.group input {
+        width: 25% !important;
+        display: inline-block;
+        border-right: 1px solid #ddd !important;
+        border-radius: 0;
+        box-sizing: border-box;
+    }
+
+    table tr td.group input:last-child {
+        border-right: 0 !important;
+    }
+</style>
 <div ng-controller="TestController">
     <section>
         <h3 class="{{title || 'hello'}}">Test Page</h3>
@@ -20,5 +82,28 @@
         </select> 
         <input type="submit" value="submit"/>   
     </form>
-    
+
+
+
+    <table class="table table-condensed table-bordered table-striped">
+        <thead>
+            <th ng-repeat="column in groupTable.columns" data-cnt="{{column.children && column.children.length}}" ng-class="{group: column.children}">
+                <span>{{column.name}}</span>
+                <span ng-repeat="child in column.children">{{child.name}}</span>
+            </th>
+        </thead>
+        <tbody>
+            <tr ng-repeat="row in groupTable.rows">
+                <td ng-repeat="column in groupTable.columns" data-cnt="{{column.children && column.children.length}}" ng-class="{group: column.children}">
+                    <span ng-show="$index === 0">{{row[column.key]}}</span>
+                    <div>
+                    <input ng-show="$index !== 0" ng-model="row[column.key]" type="text" />
+                    <input ng-repeat="child in column.children"
+                        ng-show="$parent.$index !== 0" ng-model="row[child.key]"
+                        type="text" />
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </div>

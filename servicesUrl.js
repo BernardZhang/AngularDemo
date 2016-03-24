@@ -15,5 +15,9 @@ module.exports = {
 	'plan/plist': '/plan/plist',
 
 	// module
-	'module/modules': '/module/modules'
+	'module/modules': '/module/modules',
+
+	// testing
+	'test/groupTable': '/test/groupTable'
+
 };
