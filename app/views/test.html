@@ -1,0 +1,24 @@
+<div ng-controller="TestController">
+    <section>
+        <h3 class="{{title || 'hello'}}">Test Page</h3>
+        <ul id="ztree-box-1" class="ztree"></ul>
+    </section>
+
+    <h3>Select</h3>
+    <form action="/" type="POST" method="POST">
+        <select ng-model="selected" name="selected" ng-options="item for item in items track by item">
+            <option value="">Please Select</option>
+        </select>
+
+        <select ng-model="selected2" name="selected2" ng-options="item.name for item in items2 track by item.id">
+            <option value="">Please Select2</option>
+        </select>
+    
+    
+        <select ng-model="selected3" name="selected3" ng-options="item.name as item.name.name for item in items3 track by item.id">
+            <option value="">Please Select3</option>
+        </select> 
+        <input type="submit" value="submit"/>   
+    </form>
+    
+</div>

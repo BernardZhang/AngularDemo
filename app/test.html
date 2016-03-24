@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Angular Directives Test Page</title>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="css/common.css">
+    <link rel="stylesheet" type="text/css" href="css/login.css">
+    <style type="text/css">
+        .animate-switch-container {
+          position:relative;
+          background:white;
+          border:1px solid black;
+          height:40px;
+          overflow:hidden;
+        }
+
+        .animate-switch {
+          padding:10px;
+        }
+
+        .animate-switch.ng-animate {
+          transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+
+          position:absolute;
+          top:0;
+          left:0;
+          right:0;
+          bottom:0;
+        }
+
+        .animate-switch.ng-leave.ng-leave-active,
+        .animate-switch.ng-enter {
+          top:-50px;
+        }
+        .animate-switch.ng-leave,
+        .animate-switch.ng-enter.ng-enter-active {
+          top:0;
+        }
+
+
+        .repeated-item.ng-enter,
+        .repeated-item.ng-move {
+            transition: .5s linear all;
+            opacity: 0;
+            height: 0;
+            overflow: hidden;
+        }
+
+        .repeated-item.ng-enter.ng-enter-active,
+        .repeated-item.ng-move.ng-move-active {
+            opacity:1;
+            height: 20px;
+        }
+    </style>
+</head>
+<body ng-app="app" ng-controller="IndexController">
+    <header id="header">
+        <a href="#/index">index</a>
+        <a href="#/data">data</a>
+    </header>
+
+    <div id="main" class="main-content" ng-view></div>
+
+    <h3>select:</h3>
+    <select ng-options="item.subItem as item.label for item in values" ng-model="selected">
+        <option value="">-- choose value --</option>
+    </select>
+
+    <select ng-model="selection" ng-change="changeSelection($event)" ng-options="item for item in items">
+    </select>
+    <tt>selection={{selection}}</tt>
+    <hr/>
+
+    <h3>ng-switch</h3>
+    <div class="animate-switch-container" ng-switch on="selection">
+        <div class="animate-switch" ng-switch-when="settings">Settings Div</div>
+        <div class="animate-switch" ng-switch-when="home">Home Span</div>
+        <div class="animate-switch" ng-switch-default>default</div>
+    </div>
+
+    <h3>ng-repeat</h3>
+    <div ng-repeat="item in items" class="repeated-item" ng-class="'fadeInOut'">
+        {{ item }}
+    </div>
+
+    <h3>ng-class</h3>
+    <div class="hello" ng-class="{error: red}">hello</div>
+
+    <h3>ng-show</h3>
+    <div class="hello" ng-show="info.show" ng-click="info.okHandle()">ng-show</div>
+
+
+  <!--   <footer>
+        <p>©from  2014 <i class="icon-check"></i>使用中有任何问题请加QQ群咨询:188734537</p>
+    </footer> -->
+    
+    <script type="text/javascript" src="js/lib/jquery.js"></script>
+    <script type="text/javascript" src="js/lib/angular.js"></script>
+    <script type="text/javascript" src="js/lib/angular-route.js"></script>
+    <script type="text/javascript" src="js/lib/angular-animation.js"></script>
+    <script type="text/javascript">
+        app = angular.module('app', ['ngRoute', 'ngAnimate']); 
+
+        // app.config(function($routeProvider) {
+        //     $routeProvider.when('/', {
+        //         templateUrl: 'views/index.html',
+        //         controller: 'IndexController'
+        //     })
+        //     .when('/data', {
+        //         templateUrl: 'views/data.html',
+        //         controller: 'DataController'
+        //     }).otherwise({
+        //         redirectTo: '/'
+        //     })
+        // });
+
+        app.controller('IndexController', ['$scope', function ($scope) {
+            $scope.page = {
+                heading: 'INDEX'
+            };
+            $scope.values = [{
+              id: 1,
+              label: 'aLabel',
+              subItem: { name: 'aSubItem' }
+            }, {
+              id: 2,
+              label: 'bLabel',
+              subItem: { name: 'bSubItem' }
+            }];
+
+            $scope.selected = { name: 'aSubItem' };
+            console.log($scope.page);
+
+
+            $scope.items = ['settings', 'home', 'other'];
+            $scope.selection = $scope.items[0];
+            ITEMS = $scope.items;
+
+            // events 
+            angular.extend($scope, {
+                changeSelection: function () {
+                    $scope.items.push($scope.selection + new Date().getTime());
+                }
+            });
+
+            $scope.red = true;
+            $scope.info = {
+                show: true,
+                okHandle: function () {
+                    alert('ok');
+                }
+            };
+        }]).animation('.fadeInOut', function () {
+            return {
+                enter: function (element, done) {
+                    console.log('enter', element, done);
+                    element.css('backgroundColor', 'red');
+                    $(element).animate({
+                        backgroundColor: 'yellow'
+                    }, done);
+
+                    return function(isCancelled) {
+                        if(isCancelled) {
+                          jQuery(element).stop();
+                        }
+                    };
+                },
+                leave: function () {
+                    console.log('leave', arguments);
+                },
+                move: function () {
+                    console.log('move', arguments);
+                },
+
+                addClass: function (element, className, done) {
+                    console.log('addClass', arguments);
+                },
+                removeClass: function (element, className, done) {
+                    console.log('addClass', arguments);
+                }
+            }
+        });
+
+        // app.controller('DataController', ['$scope', function ($scope) {
+        //     $scope.page = {
+        //         heading: 'DATA'
+        //     };
+        //     console.log($scope.page);
+        // }]);
+
+    </script>
+</body>
+</html>

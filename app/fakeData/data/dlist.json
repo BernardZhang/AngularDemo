@@ -1,0 +1,16 @@
+{
+	"status": true,
+	"info": null,
+	"data": [
+		{"id": 1, "key": "username", "value": "dltest", "desc": "登录用户名", "updateTime": "2016-01-13 22:32:47"},
+		{"id": 2, "key": "username", "value": "dltest", "desc": "登录用户名", "updateTime": "2016-01-13 22:32:47"},
+		{"id": 3, "key": "username", "value": "dltest", "desc": "登录用户名", "updateTime": "2016-01-13 22:32:47"},
+		{"id": 4, "key": "username", "value": "dltest", "desc": "登录用户名", "updateTime": "2016-01-13 22:32:47"},
+		{"id": 5, "key": "username", "value": "dltest", "desc": "登录用户名", "updateTime": "2016-01-13 22:32:47"},
+		{"id": 6, "key": "username", "value": "dltest", "desc": "登录用户名", "updateTime": "2016-01-13 22:32:47"},
+		{"id": 7, "key": "username", "value": "dltest", "desc": "登录用户名", "updateTime": "2016-01-13 22:32:47"},
+		{"id": 8, "key": "username", "value": "dltest", "desc": "登录用户名", "updateTime": "2016-01-13 22:32:47"},
+		{"id": 9, "key": "username", "value": "dltest", "desc": "登录用户名", "updateTime": "2016-01-13 22:32:47"},
+		{"id": 10, "key": "username", "value": "dltest", "desc": "登录用户名", "updateTime": "2016-01-13 22:32:47"}
+	]
+}

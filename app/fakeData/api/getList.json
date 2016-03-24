@@ -1,0 +1,40 @@
+{
+   "status": true,
+   "info": "",
+   "data": {
+        "methods": [
+            { "key": "", "value": "请选择方法" },
+            { "key": "GET", "value": "GET" },
+            { "key": "POST", "value": "POST" },
+            { "key": "PUT", "value": "PUT" },
+            { "key": "DELETE", "value": "DELETE" },
+            { "key": "HEAD", "value": "HEAD" },
+            { "key": "OPTIONS", "value": "OPTIONS" },
+            { "key": "TRACE", "value": "TRACE" },
+            { "key": "PATCH", "value": "PATCH" }
+        ],
+        "modules": [
+            { "key": "", "value": "请选择模块" },
+            { "key": "7", "value": "订单" },
+            { "key": "8", "value": "报表" },
+            { "key": "9", "value": "权限" },
+            { "key": "10", "value": "媒体保护" },
+            { "key": "11", "value": "其他" },
+            { "key": "12", "value": "代码位" },
+            { "key": "14", "value": "财务" },
+            { "key": "15", "value": "媒体" }
+        ],
+        "apis": [
+            { "id": 1, "host": "sspqa.baidu.com", "path": "/api/js/deliverie", "method": "GET", "description": "获取投放分页列表", "reference": 4, "module": "订单", "owner": "shenzhiliang", "createTime": "2015-11-27 17:21:39" },
+            { "id": 1, "host": "sspqa.baidu.com", "path": "/api/js/deliverie", "method": "GET", "description": "获取投放分页列表", "reference": 4, "module": "订单", "owner": "shenzhiliang", "createTime": "2015-11-27 17:21:39" },
+            { "id": 1, "host": "sspqa.baidu.com", "path": "/api/js/deliverie", "method": "GET", "description": "获取投放分页列表", "reference": 4, "module": "订单", "owner": "shenzhiliang", "createTime": "2015-11-27 17:21:39" },
+            { "id": 1, "host": "sspqa.baidu.com", "path": "/api/js/deliverie", "method": "GET", "description": "获取投放分页列表", "reference": 4, "module": "订单", "owner": "shenzhiliang", "createTime": "2015-11-27 17:21:39" },
+            { "id": 1, "host": "sspqa.baidu.com", "path": "/api/js/deliverie", "method": "GET", "description": "获取投放分页列表", "reference": 4, "module": "订单", "owner": "shenzhiliang", "createTime": "2015-11-27 17:21:39" },
+            { "id": 1, "host": "sspqa.baidu.com", "path": "/api/js/deliverie", "method": "GET", "description": "获取投放分页列表", "reference": 4, "module": "订单", "owner": "shenzhiliang", "createTime": "2015-11-27 17:21:39" },
+            { "id": 1, "host": "sspqa.baidu.com", "path": "/api/js/deliverie", "method": "GET", "description": "获取投放分页列表", "reference": 4, "module": "订单", "owner": "shenzhiliang", "createTime": "2015-11-27 17:21:39" },
+            { "id": 1, "host": "sspqa.baidu.com", "path": "/api/js/deliverie", "method": "GET", "description": "获取投放分页列表", "reference": 4, "module": "订单", "owner": "shenzhiliang", "createTime": "2015-11-27 17:21:39" },
+            { "id": 1, "host": "sspqa.baidu.com", "path": "/api/js/deliverie", "method": "GET", "description": "获取投放分页列表", "reference": 4, "module": "订单", "owner": "shenzhiliang", "createTime": "2015-11-27 17:21:39" },
+            { "id": 1, "host": "sspqa.baidu.com", "path": "/api/js/deliverie", "method": "GET", "description": "获取投放分页列表", "reference": 4, "module": "订单", "owner": "shenzhiliang", "createTime": "2015-11-27 17:21:39" }
+        ]
+    }
+}

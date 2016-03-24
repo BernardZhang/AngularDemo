@@ -1,0 +1,24 @@
+<div ng-controller="IndexController">
+	<section style="padding-top:40px;text-align:center;">
+		<img src="../img/find_bug.png" style="width:550px;height:400px;">
+	</section>
+	<section>
+		<h3 class="{{title || 'hello'}}">用户使用情况</h3>
+		<table class="table table-hover table-condensed table-bordered table-striped">
+			<thead>
+				<tr>
+					<th width="10%">用户</th>
+					<th width="45%">API-<span style="color:#FF5151">(72)</span></th>
+					<th width="45%">测试用例-<span style="color:#FF5151">(89)</span></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr class="animate-repeat" ng-repeat="item in items">
+			        <td>{{ item.username }}</td>
+					<td><a href="#/api/{{ item.username }}">{{ item.apiCnt }}</a></td>
+					<td><a href="#/case/{{ item.username }}">{{ item.caseCnt }}</a></td>
+			    </tr>
+			</tbody>
+		</table>
+	</section>
+</div>

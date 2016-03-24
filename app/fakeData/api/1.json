@@ -1,0 +1,9 @@
+{
+	"status": true,
+	"info": null,
+	"data": {
+		"mid": 1,
+		"desc": "删除自定义定向",
+		"requestContent": "POST http://sspqa.baidu.com:8040/api/js/customOrients/status HTTP/1.1"
+	}
+}
