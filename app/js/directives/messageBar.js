@@ -10,6 +10,7 @@ define(['app'], function (app) {
 				angular.extend(scope, {
 					close: function (e) {
 						scope.msgInfo.show = false;
+						scope.onClose && scope.onClose() && scope.onClose()(e）;
 					}
 				});
 

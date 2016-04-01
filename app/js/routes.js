@@ -78,6 +78,17 @@ define([], function() {
                 dependencies: [
                     'controllers/TestController'
                 ]
+            },
+            '/directives': {
+                templateUrl: '/views/directives.html',
+                dependencies: [
+                    'controllers/TestDirectivesController',
+                    'directives/pagination/pagination',
+                    'directives/dialog/dialog',
+                    'directives/messagebar/messageBar',
+                    'directives/tree/tree',
+                    'directives/setFocus'
+                ]
             }
         }
     };

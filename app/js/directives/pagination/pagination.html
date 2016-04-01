@@ -1,0 +1,16 @@
+<nav class="pagination">
+  <span>共{{pageInfo.total}}条记录 {{pageInfo.currentPage}} / {{pageInfo.pageCount}}页</span>
+  <ul>
+      <li class="" ng-click="onPrePage(pageInfo.currentPage - 1)">
+        <a href="javascript:void(0);" aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>
+      <li ng-repeat="page in pageInfo.pages" ng-class="{active: pageInfo.currentPage === page}" ng-click="onSelectPage(page)">
+        <a href="javascript:void(0)">{{page}}</a>
+      </li>
+      <li class="" ng-click="onNextPage(pageInfo.currentPage + 1)">
+        <a href="javascript:void(0);" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
+      </li>
+  </ul>
+</nav>

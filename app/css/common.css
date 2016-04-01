@@ -141,3 +141,15 @@ div#rMenu ul li{
 	list-style: none outside none;
 	background-color: #DFDFDF;
 }
+
+.main-content {
+	width: 80%;
+	margin: 0 auto;
+	min-height: 480px;
+	border: 1px solid #ddd;
+	padding: 0 20px;
+}
+
+footer {
+	text-align: center;
+}

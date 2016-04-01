@@ -1,0 +1,35 @@
+<style>
+    .tree-view {
+        width: 40%;
+        margin-right: 30px;
+        display: inline-block;
+    }
+</style>
+<div ng-controller="TestDirectivesController">
+    <h3>Directives Demo</h3>
+    <ul>
+        <li ng-repeat="directive in directives">
+            {{directive.name}}
+        </li>
+    </ul>
+
+    <dialog info="dlg.info" onOk="dlg.onOk()" onCancel="dlg.onCancel()" onClose="dlg.onClose()"></dialog>
+
+    <pagination info="pagination.info" on-change="pagination.pageChanged" max-page-count="5"></pagination>
+
+    <messagebar info="messagebar.info" on-close="messagebar.onClose"></messagebar>
+
+    <treeview data="treeview.data"
+        animation="true"
+        on-toggleExpand="treeview.toggleExpand"
+        on-select="treeview.selectItem"
+        on-drag="treeview.dragItem"
+        on-dbclick="treeview.doubleClickItem"></treeview>
+
+    <treeview data="treeview2.data"
+        animation="true"
+        on-toggleExpand="treeview2.toggleExpand"
+        on-select="treeview2.selectItem"
+        on-drag="treeview2.dragItem"
+        on-dbclick="treeview2.doubleClickItem"></treeview>
+</div>

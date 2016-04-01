@@ -158,9 +158,17 @@ define(['app', 'BaseModel', 'ZTree'], function(app, BaseModel, ZTree) {
 
             var model = new BaseModel(SERVICESCONFIG.TEST);
 
+            $scope.scrollTbody = function () {
+                console.log(arguments);
+            };
+
             model.getTableData({}, function (data) {
                 $scope.groupTable = data;
                 console.log($scope.groupTable);
+                setTimeout(function () {
+                    var thead = $('#groupTable thead');
+                    thead.find('th span').height(thead.height());
+                }, 500);
             }, null, this);
     
         }

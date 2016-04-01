@@ -6,9 +6,9 @@ define([], function () {
 
                 require(dependencies, function() {
                     $rootScope.$apply(function() {
-                        deferred.resolve();
                         $rootScope.currentView = path;
                         console.log($rootScope.currentView);
+                        deferred.resolve();
                     });
                 });
 
