@@ -150,13 +150,14 @@ define(['app'], function (app) {
                 var rect = ele.getBoundingClientRect();
                 var eventPos = {
                     x: e.originalEvent.pageX,
-                    y: e.originalEvent.pageY 
+                    y: e.originalEvent.pageY - (document.body.scrollTop || document.documentElement.scrollTop)
                 };
                 var height = rect.height;
                 var offsetY = eventPos.y - rect.top;
                 var start = height / 4;
                 var end = (height / 4) * 3;
                 var insertType = INSERT_TYPE.IN;
+                console.log(start + '-' + offsetY + '-' + end + ' | ' + eventPos.y + '-' + rect.top);
 
                 // 中间区域 作为孩子节点插入
                 if (offsetY >= start && offsetY <= end) {
@@ -201,7 +202,9 @@ define(['app'], function (app) {
                 if (isDraging && dragNodeId === nodeId) {
                     return;
                 }
-                console.log(dragNodeId);
+                console.log(nodeId + '-' + dragNodeId);
+
+                console.log('dragover:' + insertType);
 
                 switch (insertType) {
                     case INSERT_TYPE.BEFORE:
