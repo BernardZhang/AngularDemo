@@ -1,7 +1,6 @@
 .tree-view {
     padding: 10px;
     border: 1px solid #ddd;
-    /*display: inline-block;*/
 }
 
 .tree-view > ul {
@@ -57,10 +56,12 @@
 
 .node-item > ul {
     overflow: hidden;
+    margin: 0;
+    padding-left: 18px;
 }
 
 .node-item.selected > .node-info .node-name {
-    background: #ddd;
+    background: lightgreen;
 }
 
 .node-leaf .node-switch {
@@ -68,14 +69,12 @@
 }
 
 .animation-show {
-    -webkit-transition: all linear 1s;
     transition: all linear 1s;
     opacity: 1;
 }
 
 .animate-show.ng-hide-add.ng-hide-add-active,
 .animate-show.ng-hide-remove.ng-hide-remove-active {
-  -webkit-transition: all linear 0.5s;
   transition: all linear 0.5s;
 }
 
@@ -83,6 +82,11 @@
     height: 0;
     opacity: 0;
     display: block !important;
+}
+
+.node-item .node-info {
+    position: relative;
+    line-height: 25px;
 }
 
 .node-item .node-info i {
@@ -97,5 +101,74 @@
     border-radius: 0;
     width: auto;
     box-sizing: border-box;
+}
+
+.custom-checkbox {
+    border: 1px solid #ddd;
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+    position: relative;
+}
+
+.custom-checkbox.checked:after,
+.custom-checkbox.checked-part:after {
+    position: absolute;
+    content: '';
+    left: 2px;
+    top: -1px;
+    width: 4px;
+    height: 8px;
+    border-right: 2px solid lightgreen;
+    border-bottom: 2px solid lightgreen;
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+.custom-checkbox.checked-part {
+    background: #ddd;
+}
+
+.node-info.insert-in {
+    background: lightgreen;
+}
+
+.node-info.insert-before {
+    border-top: 1px solid lightgreen;
+}
+
+.node-info.insert-after {
+    border-bottom: 1px solid lightgreen;
+}
+
+.insert-arrow {
+    position: absolute;
+    content: '';
+    left: -10px;
+    top: 0;
+    border-top: 2px solid lightgreen;
+    border-right: 2px solid lightgreen;
+    width: 6px;
+    height: 6px;
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+    display: none;
+}
+
+.insert-before .insert-arrow {
+    top: 0;
+    display: block;
+}
+
+.insert-in .insert-arrow {
+    top: 50%;
+    transform: translateY(-50%) rotate(45deg);
+    display: block;
+}
+
+.insert-after .insert-arrow {
+    top: auto;
+    bottom: 0;
+    display: block;
 }
 

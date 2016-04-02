@@ -4,52 +4,74 @@
  */
 define(['app'], function (app) {
 	app.directive('treeview', function () {
-        var findNode = function (node, nodes, callback, parentNode) {
-            var result = null;
-
-            for (var i = 0, len = nodes.length; i < len; i++) {
-                if (nodes[i].id + '' === node.id + '') {
-                    result = nodes[i];
-                    callback && callback(i, nodes);
-                } else {
-                    parentNode = node;
-                    result = findNode(node, nodes[i].children || [], callback);
-                }
-
-                if (result) {
-                    return result;
-                }
-            }
-
-            return result;
-        };
-        var goThroughNodes = function (nodes, callback) {
-            if (typeof callback !== 'function') {
-                return;
-            }
-
-            (nodes || []).forEach(function (node, i) {
-                if (callback(node)) {
-                    return;
-                } else {
-                    goThroughNodes(node.children, callback);
-                }
-            });
-        };
-       
         var link = function (scope, element, attrs) {
+            // 相关属性参数初始化
             scope.animation = !!attrs.animation;
+            scope.multiple = !!attrs.multiple;
+            scope.id = attrs.key || 'id';
+            scope.name = attrs.name || 'name';
+            scope.children = attrs.children || 'children';
+            scope.isPartChecked = function (node) {
+                var children = node[scope.children] || [];
+                var hasChecked = false;
+                var hasNoChecked = false;
+
+                for (var i = 0, len = children.length; i < len; i++) {
+                    hasNoChecked = hasNoChecked || !children[i].isSelected;
+                    hasChecked = hasChecked || !!children[i].isSelected;
+                    if (hasNoChecked && hasChecked) {
+                        return true;
+                    }
+                }
+
+                return false;
+            };
+
+            var id = scope.id;
+            var name = scope.name;
+            var children = scope.children;
+            var findNode = function (node, nodes, callback) {
+                var result = null;
+
+                for (var i = 0, len = nodes.length; i < len; i++) {
+                    if (nodes[i].id + '' === node.id + '') {
+                        result = nodes[i];
+                        callback && callback(i, nodes, parent);
+                    } else {
+                        result = findNode(node, nodes[i].children || [], callback);
+                    }
+
+                    if (result) {
+                        return result;
+                    }
+                }
+
+                return result;
+            };
+            var goThroughNodes = function (nodes, callback) {
+                if (typeof callback !== 'function') {
+                    return;
+                }
+
+                (nodes || []).forEach(function (node, i) {
+                    if (callback(node)) {
+                        return;
+                    } else {
+                        goThroughNodes(node.children, callback);
+                    }
+                });
+            };
+
             // events
             angular.extend(
                 scope,
                 {
-                    toggle: function (node) {
+                    toggle: function (node, s) {
                         node.isCollapsed = !node.isCollapsed;
                         scope.onToggleExpand && scope.onToggleExpand() && scope.onToggleExpand()(node);
                     },
                     edit: function (node, nodes, e) {
                         goThroughNodes(nodes, function (node) {
-                            console.log(node.id);
                             node.isEdit = false;
                         });
                         node.isEdit = true;
@@ -61,31 +83,49 @@ define(['app'], function (app) {
                         });
                         scope.onDelete && scope.onDelete(node);
                     },
-                    select: function (node, nodes) {
-                        if (attrs.multipleSelection === true) {
-                            node.isSelected = true;
-                        } else {
-                            goThroughNodes(nodes, function (node) {
-                                console.log(node.id);
-                                node.isSelected = false;
+                    select: function (node, nodes, e) {
+                        if (scope.multiple) {
+                            // 处理子节点
+                            goThroughNodes(node[scope.children], function (item) {
+                                item.isSelected = !node.isSelected;
                             });
+                            var tempNode = {};
+                            tempNode[id] = $(e.currentTarget).closest('ul').data('pid');
+                            var parentNode = findNode(tempNode, nodes);
+                            var hasCheckedItem = false;
+                            var hasNotCheckedItem = false;
+                            var children = [];
+
+                            node.isSelected = !node.isSelected;
+                            if (parentNode) {
+                                children = parentNode[scope.children];
+                                for (var i = 0; i < children.length; i++) {
+                                    hasCheckedItem = hasCheckedItem || children[i].isSelected;
+                                    hasNotCheckedItem = hasNotCheckedItem || !children[i].isSelected;
+                                }
+                                parentNode.isSelected = hasCheckedItem && !hasNotCheckedItem;
+                            }
+                        } else {
+                            if (!node.isSelected) {
+                                goThroughNodes(nodes, function (node) {
+                                    node.isSelected = false;
+                                });
+                            }
+                            node.isSelected = !node.isSelected;
                         }
-                        node.isSelected = true;
+                        
                         scope.onSelect && scope.onSelect() && scope.onSelect()(node);
                     },
                     finishEdit: function (node) {
-                        console.log('blur');
                         node.isEdit = false;
-                        console.log(node);
                     },
                     inputKeyup: function (node, e) {
-                        console.log('keyup', e);
                         if (e.keyCode === 13) {
                             this.finishEdit(node, e);
                         }
                     },
                     dragStart: function (node, nodes, e) {
-                        e.originalEvent.dataTransfer.setData('id', node.id);
+                        e.originalEvent.dataTransfer.setData('id', node[id]);
                         e.handleObj.data = node;
 
                     },
@@ -93,87 +133,21 @@ define(['app'], function (app) {
                         e.preventDefault();
                     },
                     drop: function (node, nodes, e) {
-                        console.log(e.originalEvent.dataTransfer.getData('id'));
-                        console.log(e.handleObj);
+
                     }
                 }
             );
             
             var isDraging = false;
-            var dragHandler = function (e) {
-                isDraging = true;
-                console.log('dragstart');
-                var target = $(e.currentTarget);
-                var nodeId = target.data('id');
-
-                e.originalEvent.dataTransfer.setData('id', nodeId);
-                scope.onDragStart && scope.onDragStart() && scope.onDragStart()(findNode({ id: id }));
+            var dragNodeId;
+            var INSERT_TYPE = {
+                BEFORE: 1, // 前兄弟节点插入
+                IN: 2, // 子节点插入
+                AFTER: 3 // 后兄弟节点插入
             };
-            var dragoverHandler = function (e) {
-                e.preventDefault();
-
-                console.log('dragover', e.originalEvent.dataTransfer.getData('id'));
-            };
-            var dragendHandler = function (e) {
-                console.log('drag end', e.originalEvent.dataTransfer.getData('id'));
-                if (e.originalEvent.dataTransfer.getData('id')) {
-                    console.log('aaa');
-                }
-                isDraging = false;
-            };
-            var dropHandler = function (e) {
-                var target = $(e.currentTarget);
-                var nodeId = target.data('id');
-                var dragNodeId = e.originalEvent.dataTransfer.getData('id');
-                var dragHandler = scope.onDrop && scope.onDrop();
-                var INSERT_TYPE = {
-                    BEFORE: 1, // 前兄弟节点插入
-                    IN: 2, // 子节点插入
-                    AFTER: 3 // 后兄弟节点插入
-                };
-                var moveNode = function (nodeId, dropNodeId, nodes, insertType) {
-                    if (isDraging) {
-                        var parentNode = null;
-                        var node = findNode({ id: nodeId }, nodes, parentNode);
-                        var dragNode = findNode({ id: dragNodeId }, nodes, function (index, children) {
-                            children.splice(index, 1);
-                        });
-                        console.log(node, dragNode);
-                        console.log(':)' + insertType);
-
-                        if (node && dragNode) {
-                            switch (insertType) {
-                                case INSERT_TYPE.BEFORE:
-                                    if (parentNode) {
-                                        parentNode.children.unshift(dragNode);
-                                    } else {
-                                        scope.nodes.unshift(dragNode);
-                                    }
-                                    break;
-                                case INSERT_TYPE.IN:
-                                    node.children = node.children || [];
-                                    node.children.push(dragNode);
-                                    break;
-                                case INSERT_TYPE.AFTER:
-                                    if (parentNode) {
-                                        parentNode.children.push(dragNode);
-                                    } else {
-                                        scope.nodes.push(dragNode);
-                                    }
-                            }
-                            
-                        }
-                    }
-                };
-
-                e.preventDefault();
-                EV = e;
-                T = e.currentTarget;
-                console.log(e);
-                console.log(e.currentTarget);
-                // drop位置边界值判断，如果drop在元素竖直方向的中间区域，则将drop节点作为其子节点加入
-                // 若在中间偏上的位置则作为前兄弟节点， 若在中间位置偏下则作为后兄弟节点加入
-                var rect = target[0].getBoundingClientRect();
+            // 获取插入节点的位置，三种位置: 前兄弟，后兄弟，子节点
+            var getInsertType = function (ele, e) {
+                var rect = ele.getBoundingClientRect();
                 var eventPos = {
                     x: e.originalEvent.pageX,
                     y: e.originalEvent.pageY 
@@ -182,7 +156,124 @@ define(['app'], function (app) {
                 var offsetY = eventPos.y - rect.top;
                 var start = height / 4;
                 var end = (height / 4) * 3;
-                var inserType = INSERT_TYPE.IN;
+                var insertType = INSERT_TYPE.IN;
+
+                // 中间区域 作为孩子节点插入
+                if (offsetY >= start && offsetY <= end) {
+                    insertType = INSERT_TYPE.IN;
+                }
+
+                // 中间偏上 作为前兄弟节点插入
+                if (offsetY < start) {
+                    insertType = INSERT_TYPE.BEFORE;
+                }
+
+                // 中间偏下 作为后兄弟节点插入
+                if (offsetY > end) {
+                    insertType = INSERT_TYPE.AFTER;
+                }
+
+                return insertType;
+            };
+            var dragHandler = function (e) {
+                isDraging = true;
+                var target = $(e.currentTarget);
+                var nodeId = target.data('id');
+                var node = {};
+                node[id] = nodeId;
+                node = findNode(node, scope.nodes);
+                dragNodeId = nodeId;
+
+                e.originalEvent.dataTransfer.effectAllowed = 'move';
+
+                e.originalEvent.dataTransfer.setData('id', nodeId);
+                scope.$apply(function () {
+                    node.isCollapsed = true;
+                    scope.onDragStart && scope.onDragStart() && scope.onDragStart()();
+                });
+            };
+            var dragoverHandler = function (e) {
+                e.preventDefault();
+                var target = $(e.currentTarget);
+                var nodeId = target.data('id');
+                var insertType = getInsertType(target[0], e);
+
+                if (isDraging && dragNodeId === nodeId) {
+                    return;
+                }
+                console.log(dragNodeId);
+
+                switch (insertType) {
+                    case INSERT_TYPE.BEFORE:
+                        target.removeClass('insert-after insert-in').addClass('insert-before'); 
+                        break;
+                    case INSERT_TYPE.IN:
+                        target.removeClass('insert-after insert-before').addClass('insert-in');
+                        break;
+                    case INSERT_TYPE.AFTER:
+                        target.removeClass('insert-in insert-before').addClass('insert-after');
+                        break;
+                }
+            };
+            var dragleaveHandler = function (e) {
+                $(e.currentTarget).removeClass('insert-before insert-in insert-after');
+            };
+            var dragendHandler = function (e) {
+                isDraging = false;
+            };
+            var dropHandler = function (e) {
+                var target = $(e.currentTarget);
+                var nodeId = target.data('id');
+                var parentNodeId = target.closest('ul').data('pid');
+                var dragNodeId = e.originalEvent.dataTransfer.getData('id');
+                var dragHandler = scope.onDrop && scope.onDrop();
+                var moveNode = function (nodeId, parentNodeId, dragNodeId, nodes, insertType) {
+                    if (isDraging) {
+                        var tempNode = {};
+                        var node = null;
+                        var parentNode = null;
+                        var insertIndex = 0;
+
+                        if (parentNodeId) {
+                            tempNode[id] = parentNodeId;
+                            parentNode = findNode(tempNode, nodes);
+                            for (var i = 0, len = parentNode[children].length; i < len; i++) {
+                                if (parentNode[children][i].id === nodeId) {
+                                    node = parentNode[children][i];
+                                    insertIndex = i;
+                                    break;
+                                }
+                            }
+                        } else {
+                            tempNode[id] = nodeId;
+                            node = findNode(tempNode, nodes);
+                        }
+
+                        tempNode[id] = dragNodeId;
+                        var dragNode = findNode(tempNode, nodes, function (index, children) {
+                            children.splice(index, 1);
+                        });
+                        var insertNodes = [];
+
+                        if (node && dragNode) {
+                            switch (insertType) {
+                                case INSERT_TYPE.BEFORE:
+                                    insertNodes = parentNode ? parentNode[scope.children] : scope.nodes;
+                                    break;
+                                case INSERT_TYPE.IN:
+                                    node[scope.children] = node[scope.children] || [];
+                                    insertNodes = node[scope.children];
+                                    insertIndex = nodes.length;
+                                    break;
+                                case INSERT_TYPE.AFTER:
+                                    insertNodes = parentNode ? parentNode[scope.children] : scope.nodes;
+                                    insertIndex++;
+                                    break;
+                            }
+                            insertNodes.splice(insertIndex, 0, dragNode);
+                        }
+                    }
+                };
 
                 // 如果是拖拽的节点，drop到自己则不做任何处理
                 // 如果外部传了onDrag回调且返回true,则表明不需要内部的移动节点处理
@@ -190,28 +281,21 @@ define(['app'], function (app) {
                     return;
                 }
 
-                // 中间区域 作为孩子节点插入
-                if (offsetY >= start && offsetY <= end) {
-                    inserType = INSERT_TYPE.IN;
-                }
-
-                // 中间偏上 作为前兄弟节点插入
-                if (offsetY < start) {
-                    inserType = INSERT_TYPE.BEFORE;
-                }
-
-                // 中间偏下 作为后兄弟节点插入
-                if (offsetY > end) {
-                    inserType = INSERT_TYPE.AFTER;
-                }
+                // drop位置边界值判断，如果drop在元素竖直方向的中间区域，则将drop节点作为其子节点加入
+                // 若在中间偏上的位置则作为前兄弟节点， 若在中间位置偏下则作为后兄弟节点加入
+                var insertType = getInsertType(target[0], e);
+                console.log(insertType);
                 scope.$apply(function () {
-                    moveNode(nodeId, dragNodeId, scope.nodes, inserType);
+                    moveNode(nodeId, parentNodeId, dragNodeId, scope.nodes, insertType);
                 });
+                $(e.currentTarget).removeClass('insert-before insert-in insert-after');
+                e.preventDefault();
             };
 
             // add drag & drop events
             $(element).on('dragstart', '.node-info', dragHandler);
             $(element).on('dragover', '.node-info', dragoverHandler);
+            $(element).on('dragleave', '.node-info', dragleaveHandler);
             $(element).on('dragend', '.node-info', dragendHandler);
             $(element).on('drop', '.node-info', dropHandler);
         };

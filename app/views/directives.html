@@ -2,7 +2,9 @@
     .tree-view {
         width: 40%;
         margin-right: 30px;
+        margin-bottom: 30px;
         display: inline-block;
+        vertical-align: top;
     }
 </style>
 <div ng-controller="TestDirectivesController">
@@ -28,6 +30,7 @@
 
     <treeview data="treeview2.data"
         animation="true"
+        multiple="true"
         on-toggleExpand="treeview2.toggleExpand"
         on-select="treeview2.selectItem"
         on-drag="treeview2.dragItem"

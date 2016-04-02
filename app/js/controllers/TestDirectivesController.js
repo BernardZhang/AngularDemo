@@ -96,12 +96,30 @@ define(['app', 'BaseModel'], function(app, BaseModel) {
                                        id: 11,
                                        name: 'node11',
                                        children: [
-                                           {
+                                            {
                                                id: 111,
                                                name: 'node111' 
-                                           }
+                                            },
+                                            {
+                                               id: 112,
+                                               name: 'node112' 
+                                            }
                                        ]     
-                                   } 
+                                   },
+                                   {
+                                       id: 12,
+                                       name: 'node12',
+                                       children: [
+                                            {
+                                               id: 121,
+                                               name: 'node121' 
+                                            },
+                                            {
+                                               id: 122,
+                                               name: 'node122' 
+                                            }
+                                       ]     
+                                   }  
                                ] 
                             },
                             {
