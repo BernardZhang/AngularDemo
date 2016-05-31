@@ -87,7 +87,9 @@ define([], function() {
                     'directives/dialog/dialog',
                     'directives/messagebar/messageBar',
                     'directives/tree/tree',
-                    'directives/setFocus'
+                    'directives/setFocus',
+                    'directives/mindmap/mindmap',
+                    'directives/spliter/spliter'
                 ]
             }
         }

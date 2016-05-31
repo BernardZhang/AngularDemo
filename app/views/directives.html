@@ -35,4 +35,19 @@
         on-select="treeview2.selectItem"
         on-drag="treeview2.dragItem"
         on-dbclick="treeview2.doubleClickItem"></treeview>
+
+    <mindmap data="mindmap.data"
+        expandlevel="3"
+        on-select="mindmap.selectNode"
+        on-toggleExpand="mindmap.toggleExpand"></mindmap>
+
+    <pre ng-show="!!mindmap.selectedNode">{{mindmap.selectedNode | json:4}}</pre>
+ 
+    <mindmap data="mindmap2.data" multiple="true"
+        on-select="mindmap2.selectNode"
+        on-toggleExpand="mindmap2.toggleExpand"></mindmap>
+    
+    <pre ng-show="mindmap2.selectedNodes.length">{{mindmap2.selectedNodes| json:4}}</pre>
+
+    <spliter></spliter>
 </div>

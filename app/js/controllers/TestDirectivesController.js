@@ -155,6 +155,109 @@ define(['app', 'BaseModel'], function(app, BaseModel) {
                     treeview2: angular.copy($scope.treeview)
                 }
             );
+
+            // mindmap
+            angular.extend(
+                $scope,
+                {
+                    mindmap: {
+                        data: {
+                            id: '1',
+                            name: 'node1',
+                            children: [
+                                {
+                                    id: '11',
+                                    name: 'node11',
+                                    children: [
+                                        {
+                                            id: '111',
+                                            name: 'node111',
+                                            children: [
+                                                {
+                                                    id: '1111',
+                                                    name: 'node-1111',
+                                                    children: [
+                                                        {
+                                                            id: '11111',
+                                                            name: 'node-11111'
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    id: '1112',
+                                                    name: 'node-1112',
+                                                    children: [
+                                                        {
+                                                            id: '11121',
+                                                            name: 'node-11121'
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            id: '112',
+                                            name: 'node112',
+                                            children: [
+                                                {
+                                                    id: '1121',
+                                                    name: 'node-1121',
+                                                    children: [
+                                                        {
+                                                            id: '11211',
+                                                            name: 'node-11211'
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    id: '1122',
+                                                    name: 'node-1122',
+                                                    children: [
+                                                        {
+                                                            id: '11221',
+                                                            name: 'node-11221'
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            id: '112',
+                                            name: 'node112'
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        selectNode: function (node, selectedNode) {
+                            console.log('selectNode', node, selectedNode);
+                            $scope.mindmap.selectedNode = selectedNode;
+                        },
+                        toggleExpand: function (node) {
+                            console.log('toggleExpand', node);
+                        }
+                    }
+                }
+            );
+
+            angular.extend(
+                $scope,
+                {
+                    mindmap2: angular.copy($scope.mindmap)
+                }
+            );
+            angular.extend(
+                $scope.mindmap2,
+                {
+                    selectNode: function (node, selectedNodes) {
+                        console.log('selectNode', node, selectedNodes);
+                        $scope.mindmap2.selectedNodes = selectedNodes;
+                    },
+                    toggleExpand: function (node) {
+                        console.log('toggleExpand', node);
+                    } 
+                }
+            );
             
         }
     ]);

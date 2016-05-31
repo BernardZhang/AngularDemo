@@ -40,6 +40,7 @@ define(['app'], function (app) {
 	        		scope.onChange && scope.onChange() && scope.onChange()(page);
 	        	};
 
+	        	scope.pageInfo = scope.pageInfo || {};
 	        	angular.extend(scope.pageInfo, {
 	        		maxPageCount: +attrs.maxPageCount || 10,
 	        		prePage: scope.pageInfo.currentPage

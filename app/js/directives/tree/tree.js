@@ -127,7 +127,7 @@ define(['app'], function (app) {
                     dragStart: function (node, nodes, e) {
                         e.originalEvent.dataTransfer.setData('id', node[id]);
                         e.handleObj.data = node;
-
+                        console.log('dragStart...');
                     },
                     dragOver: function (node, nodes, e) {
                         e.preventDefault();

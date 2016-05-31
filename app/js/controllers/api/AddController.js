@@ -18,6 +18,7 @@ define(['app', 'BaseModel'], function(app, BaseModel) {
                         });
                     });
                 };
+                
 
             angular.extend($scope, {
                 modules: []

@@ -5,7 +5,7 @@ require.config({
 		'angular-route': 'lib/angular-route',
 		'angular-animation': 'lib/angular-animation',
 		'bootstrap': 'lib/bootstrap.min',
-		'jquery': 'lib/jquery',
+		'jquery': 'lib/jquery-1.11.3',
 		'ZTree': '../ZTree/js/jquery.ztree.all-3.5.min',
 
 		'BaseModel': 'Services/BaseModel'
