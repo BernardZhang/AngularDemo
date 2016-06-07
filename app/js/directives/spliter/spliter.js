@@ -7,10 +7,7 @@ define(['app'], function (app) {
             var startPos = 0;
             var delt = 0;
             var leftArea = $(element).find('.spliter-left');
-
-            
-
-            $(document).on('mousemove', function (e) {
+            var mouseMoveHandle = function (e) {
                 e.preventDefault();
                 if (isMousedown) {
                     delt = startPos - e.pageX;
@@ -18,11 +15,12 @@ define(['app'], function (app) {
                     startPos = e.pageX;
                     console.log(delt, leftArea.width());
                 }
-            });
-
-            $(document).on('mouseup', function () {
+            };
+            var mouseupHandle = function (e) {
                 isMousedown = false;
-            });
+                $(document).off('mousemove', mouseMoveHandle);
+                $(document).off('mouseup', mouseupHandle);
+            };
 
             angular.extend(
                 scope,
@@ -30,18 +28,8 @@ define(['app'], function (app) {
                     mousedown: function (e) {
                         isMousedown = true;
                         startPos = e.pageX;
-                    },
-                    mousemove: function (e) {
-                        e.preventDefault();
-                        // if (isMousedown) {
-                        //     delt = startPos - e.pageX;
-                        //     leftArea.width(leftArea.width() + delt);
-                        //     startPos = e.pageX;
-                        //     console.log(delt, leftArea.width());
-                        // }
-                    },
-                    mouseup: function (e) {
-                        // isMousedown = false;
+                        $(document).on('mousemove', mouseMoveHandle);
+                        $(document).on('mouseup', mouseupHandle);
                     }
                 }
             );

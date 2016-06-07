@@ -24,6 +24,7 @@ app.all('*', function(req, res, next) {
 
 // 静态资源文件直接输出
 app.use('/', express.static(path.join(__dirname, 'app')));
+app.use('/node_modules', express.static(path.join(__dirname, 'node_modules')));
 
 // 简单测试接口helloworld
 app.get('/helloworld', function(req, res){

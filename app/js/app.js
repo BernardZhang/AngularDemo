@@ -1,5 +1,5 @@
 define(['routes','services/dependencyResolverFor', 'servicesConfig'], function(config, dependencyResolverFor, servicesConfig){
-    var app = angular.module('app', ['ngRoute', 'ngAnimate']);
+    var app = angular.module('app', ['ngRoute'/*, 'ngAnimate'*/]);
 
     app.config(
     [
@@ -9,9 +9,9 @@ define(['routes','services/dependencyResolverFor', 'servicesConfig'], function(c
         '$compileProvider',
         '$filterProvider',
         '$provide',
-        '$animateProvider',
+        // '$animateProvider',
 
-        function($routeProvider, $locationProvider, $controllerProvider, $compileProvider, $filterProvider, $provide, $animateProvider) {
+        function($routeProvider, $locationProvider, $controllerProvider, $compileProvider, $filterProvider, $provide/*, $animateProvider*/) {
 	        app.controller = $controllerProvider.register;
 	        app.directive  = $compileProvider.directive;
 	        app.filter     = $filterProvider.register;
@@ -87,52 +87,52 @@ define(['routes','services/dependencyResolverFor', 'servicesConfig'], function(c
         };
     });
 
-    app.animation('.page-animation', function () {
-        return {
-            enter: function (element, done) {
-                element.css({
-                    opacity: 1,
-                    position: "relative",
-                    top: 0,
-                    left: '100%',
-                    transform: 'translateY(-100%)',
-                    marginTop: 0
-                }).animate({
-                    top: 0,
-                    left: 0,
-                    opacity: 1
-                }, 1000, function () {
-                    element.css('transform', 'translateY(0)');
-                    element.css('marginTop', 70);
-                    done();   
-                });
-                // done();
-            },
-            leave: function (element, done) {
-                element.css({
-                    // opacity: 1,
-                    position: "relative",
-                    top: 0,
-                    left: 0
-                }).animate({
-                    // opacity: 0,
-                    top: 0,
-                    left: "-100%"
-                }, 1000, done);
-                // done();
-            },
-            move: function (element, done) {
-                console.log('move');
-                done();
-            },
-            addClass: function () {
+    // app.animation('.page-animation', function () {
+    //     return {
+    //         enter: function (element, done) {
+    //             element.css({
+    //                 opacity: 1,
+    //                 position: "relative",
+    //                 top: 0,
+    //                 left: '100%',
+    //                 transform: 'translateY(-100%)',
+    //                 marginTop: 0
+    //             }).animate({
+    //                 top: 0,
+    //                 left: 0,
+    //                 opacity: 1
+    //             }, 1000, function () {
+    //                 element.css('transform', 'translateY(0)');
+    //                 element.css('marginTop', 70);
+    //                 done();   
+    //             });
+    //             // done();
+    //         },
+    //         leave: function (element, done) {
+    //             element.css({
+    //                 // opacity: 1,
+    //                 position: "relative",
+    //                 top: 0,
+    //                 left: 0
+    //             }).animate({
+    //                 // opacity: 0,
+    //                 top: 0,
+    //                 left: "-100%"
+    //             }, 1000, done);
+    //             // done();
+    //         },
+    //         move: function (element, done) {
+    //             console.log('move');
+    //             done();
+    //         },
+    //         addClass: function () {
 
-            },
-            removeClass: function () {
+    //         },
+    //         removeClass: function () {
 
-            }
-        };
-    });
+    //         }
+    //     };
+    // });
 
 
 
