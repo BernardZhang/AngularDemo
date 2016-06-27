@@ -258,6 +258,36 @@ define(['app', 'BaseModel'], function(app, BaseModel) {
                     } 
                 }
             );
+
+
+            angular.extend(
+                $scope,
+                {
+                    grid: {
+                        cols: [
+                            {
+                                key: 'col1',
+                                name: 'Column1'
+                            },
+                            {
+                                key: 'col2',
+                                name: 'Column2'
+                            },
+                            {
+                                key: 'col3',
+                                name: 'Column3'
+                            }
+                        ],
+                        rows: [
+                            {
+                                col1: 'Hello1',
+                                col2: 'Hello2',
+                                col3: 'Hello3'
+                            }
+                        ]
+                    }
+                }
+            );
             
         }
     ]);

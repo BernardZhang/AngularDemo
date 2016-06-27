@@ -49,5 +49,13 @@
     
     <pre ng-show="mindmap2.selectedNodes.length">{{mindmap2.selectedNodes| json:4}}</pre>
 
-    <spliter></spliter>
+    <grid cols="grid.cols"
+        rows="grid.rows"
+        sort="true"
+        resize="true">
+    </grid>
+
+    <spliter ng-if="false"></spliter>
+
+    
 </div>

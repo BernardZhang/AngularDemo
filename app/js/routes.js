@@ -89,7 +89,8 @@ define([], function() {
                     'directives/tree/tree',
                     'directives/setFocus',
                     'directives/mindmap/mindmap',
-                    'directives/spliter/spliter'
+                    'directives/spliter/spliter',
+                    'directives/grid/grid'
                 ]
             }
         }

@@ -1,0 +1,67 @@
+.grid-container {
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    height: 400px;
+}
+
+.grid-content {
+    position: absolute;
+    width: 100%;
+    overflow: auto;
+}
+
+.grid-container table {
+    width: 1px;
+    min-width: 100%;
+    max-width: none;
+    table-layout: fixed;
+    border: 1px solid #ddd;
+}
+
+.grid-container td,
+.grid-container th {
+    border-right: 1px solid #ddd;
+    box-sizing: border-box;
+}
+
+.grid-header td,
+.grid-body td,
+.grid-body td div {
+    /*position: relative;*/
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    word-break: break-all;
+    padding: 0 5px;
+    box-sizing: border-box;
+}
+
+.grid-header td > span {
+    overflow: hidden;
+}
+
+.grid-body {
+    margin-top: -1px;
+}
+
+.invisible-row,
+.invisible-row th {
+    height: 0;
+    border-top: 0;
+    border-bottom: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.col-resizer {
+    position: absolute;
+    /*top: 0;*/
+    /*right: -3px;*/
+    width: 5px;
+    height: 25px;
+    display: inline-block;
+    cursor: col-resize;
+    z-index: 10;
+    background: red;
+}

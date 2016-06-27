@@ -1,0 +1,31 @@
+<div class="grid-container">
+    <div class="grid-content">
+        <div class="grid-header">
+            <table class="">
+                <tbody>
+                    <tr>
+                        <td ng-repeat="col in cols">
+                            <span>{{col.name}}</span>
+                            <span class="col-resizer"
+                                ng-mousedown="resizeMovedown($index, $event)"></span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="grid-body">
+            <table class="">
+                <tbody>
+                    <tr class="invisible-row">
+                        <th ng-repeat="col in cols"></th>
+                    </tr>
+                    <tr ng-repeat="row in rows">
+                        <td ng-repeat="col in cols">
+                            <div>{{row[col.key]}}</div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
