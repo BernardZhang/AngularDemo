@@ -21,7 +21,12 @@
                     </tr>
                     <tr ng-repeat="row in rows">
                         <td ng-repeat="col in cols">
-                            <div>{{row[col.key]}}</div>
+                            <grid-cell ng-if="!!col.template" data="col">
+                                <div compile="col.template" col="col" row="row"></div>
+                            </grid-cell>
+                            <div ng-if="!col.template">
+                                {{row[col.key]}}
+                            </div>
                         </td>
                     </tr>
                 </tbody>
