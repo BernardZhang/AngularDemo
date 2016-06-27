@@ -5,15 +5,16 @@
                 <tbody>
                     <tr>
                         <td ng-repeat="col in cols">
-                            <span>{{col.name}}</span>
+                            <div class="col-header">{{col.name}}</div>
                             <span class="col-resizer"
+                                ng-if="$index !== cols.length - 1"
                                 ng-mousedown="resizeMovedown($index, $event)"></span>
                         </td>
                     </tr>
                 </tbody>
             </table>
         </div>
-        <div class="grid-body">
+        <div class="grid-body" ng-style="bodyStyle">
             <table class="">
                 <tbody>
                     <tr class="invisible-row">
