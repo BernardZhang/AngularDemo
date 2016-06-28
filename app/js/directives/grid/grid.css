@@ -2,19 +2,20 @@
     width: 100%;
     height: 100%;
     position: relative;
-    overflow: hidden;
-    border: 1px solid red;
+    overflow-y: hidden;
+    overflow-x: auto;
 }
 
 .grid-content {
     position: absolute;
-    width: 100%;
+    min-width: 100%;
     height: 100%;
     overflow-x: auto;
     overflow-y: hidden;
     display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
+    flex-direction: column;
 }
 
 .grid-container table {
@@ -25,13 +26,35 @@
     border: 1px solid #ddd;
 }
 
+.grid-border table tr {
+    border-bottom: 1px solid #ddd;
+}
+
 .grid-container td,
 .grid-container th {
     border-right: 1px solid #ddd;
     box-sizing: border-box;
 }
 
+.grid-container td input {
+    border: none;
+    /*background: transparent;*/
+}
+
+.grid-header {
+    position: relative;
+    z-index: 99;
+}
+
+.grid-header td {
+    height: 30px;
+    line-height: 30px;
+    /*background: #ddd;*/
+    font-weight: bold;
+}
+
 .grid-header td,
+.grid-header td div,
 .grid-body td,
 .grid-body td div {
     /*position: relative;*/
@@ -39,9 +62,13 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     word-break: break-all;
-    padding: 0 5px;
     box-sizing: border-box;
 }
+
+.grid-header td,
+.grid-body td {
+    padding: 2px 5px;
+}   
 
 .grid-header td > span {
     overflow: hidden;
@@ -73,11 +100,9 @@
 .col-resizer {
     position: absolute;
     top: 0;
-    /*right: -3px;*/
     width: 5px;
     height: 25px;
     display: inline-block;
     cursor: col-resize;
     z-index: 10;
-    background: red;
 }

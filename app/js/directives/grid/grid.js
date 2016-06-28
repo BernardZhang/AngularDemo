@@ -22,8 +22,8 @@ define(
                             var width;
                             var minTableWidth;
                             var colPaddingLeft = 0;
-                            var getWidthWithPX = function (dom) {
-                                return parseInt(dom.css('width'), 10) + increase + 'px';
+                            var getWidth = function (dom) {
+                                return parseInt(dom.css('width'), 10);
                             };
                             var setColWidthByIndex = function (index, increase) {
                                 var headerTr = $(element).find('.grid-header tr');
@@ -34,32 +34,34 @@ define(
 
                                 width += increase;
                                 col.css({
-                                    width: width
+                                    width: width + 'px'
                                 });
                                 headerCol.css({
-                                    width: width
+                                    width: width + 'px'
                                 });
                                 resizer.css({
                                     marginLeft: width - colPaddingLeft - 2 + 'px'
                                 });
+
+                                console.log(width, increase);
 
                                 if (increase < 0
                                     && headerTr.width() <= minTableWidth) {
                                     var lastTd = headerTr.find('td').last();
                                     var lastTh = invisibleRow.find('th').last();
                                     lastTd.css({
-                                        width: getWidthWithPX(lastTd)
+                                        width: getWidth(lastTd) + 'px'
                                     });
                                     lastTh.css({
-                                        width: getWidthWithPX(lastTh)
+                                        width: getWidth(lastTh) + 'px'
                                     });
                                 }
                             };
                             var mousemoveHandle = function (evt) {
                                 if (resizerDown) {
                                     evt.preventDefault();
-                                    startX = evt.pageX;
                                     setColWidthByIndex(colIndex, evt.pageX - startX);
+                                    startX = evt.pageX;
                                 }
                             };
                             var mouseupHandle = function () {
@@ -80,7 +82,7 @@ define(
                                         startX = evt.pageX;
                                         resizerDown = true;
                                         colIndex = index;
-                                        width = getWidthWithPX($(element).find('.grid-header td').eq(index));
+                                        width = getWidth($(element).find('.grid-header td').eq(index));
                                         document.addEventListener('mousemove', mousemoveHandle);
                                         document.addEventListener('mouseup', mouseupHandle);
                                     }
@@ -91,19 +93,16 @@ define(
                                 function () {
                                     var invisibleCols = $(element).find('.invisible-row th');
                                     var gridCols = $(element).find('.grid-header td');
-                                    var widths = [];
-                                    var width;
                                     colPaddingLeft = parseInt(gridCols.eq(0).css('paddingLeft'), 10);
                                     invisibleCols.each(function (i, item) {
-                                        width =  getWidthWithPX(gridCols.eq(i));
+                                        width =  getWidth(gridCols.eq(i));
                                         $(item).css('width', width);
-                                        gridCols.eq(i).css('width', width);
+                                        gridCols.eq(i).css('width', width + 'px');
                                         gridCols.eq(i).find('.col-resizer').css({
                                             marginLeft: (width - colPaddingLeft - 2) + 'px'
                                         });
-                                        colsWidth[i] = width;
                                     });
-                                    minTableWidth = getWidthWithPX($(element));
+                                    minTableWidth = getWidth($(element));
                                 },
                                 25
                             );
