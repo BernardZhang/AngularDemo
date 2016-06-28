@@ -90,7 +90,10 @@ define([], function() {
                     'directives/setFocus',
                     'directives/mindmap/mindmap',
                     'directives/spliter/spliter',
-                    'directives/grid/grid'
+                    'directives/grid/grid',
+                    'directives/grid/compile',
+                    'directives/grid/Cell',
+                    'directives/Button'
                 ]
             }
         }

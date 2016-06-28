@@ -9,6 +9,7 @@ define(
                     return {
                         restrict: 'AE',
                         replace: true,
+                        // transclude:true,
                         scope: {
                             cols: '=',
                             rows: '='

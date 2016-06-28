@@ -271,11 +271,13 @@ define(['app', 'BaseModel'], function(app, BaseModel) {
                             },
                             {
                                 key: 'col2',
-                                name: 'Column2'
+                                name: 'Column2',
+                                template: '<input ng-model="row[col.key]" />'
                             },
                             {
                                 key: 'col3',
-                                name: 'Column3'
+                                name: 'Column3',
+                                template: '<ui-button key="col3" text="row[col.key]"></ui-button>'
                             }
                         ],
                         rows: [
