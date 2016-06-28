@@ -4,6 +4,7 @@
     position: relative;
     overflow-y: hidden;
     overflow-x: auto;
+    border-bottom: 1px solid #ddd;
 }
 
 .grid-content {

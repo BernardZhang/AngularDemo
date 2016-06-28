@@ -93,7 +93,9 @@ define([], function() {
                     'directives/grid/grid',
                     'directives/grid/compile',
                     'directives/grid/Cell',
-                    'directives/Button'
+                    'directives/Button',
+                    'directives/layout/layout'
+
                 ]
             }
         }
