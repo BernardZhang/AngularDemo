@@ -59,12 +59,29 @@
     <spliter ng-if="false"></spliter>
 
     <br/>
-    <div layout>
-        <div layout-top>Top</div>
-        <hspliter></hspliter>
-        <div layout-center>Center</div>
-        <hspliter></hspliter>
-        <div layout-bottom>Bottom</div>
+    <div layout height="600" direction="vertical" resizable="true">
+        <div layout-top height="50" resizable="true">Top</div>
+        <div layout-center direction="horizontal">
+            <div layout direction="horizontal" resizable="true">
+                <div layout-left width="200">Left</div>
+                <div layout-right>
+                    <div layout direction="vertical" resizable="true">
+                        <div layout-top height="100">Right top</div>
+                        <div layout-center direction="vertical">
+                            <div layout direction="vertical" resizable="true">
+                                <div layout-top height="50">Right Center Top</div>
+                                <div layout-center>
+                                    <div layout-left width="150">Right Center Left</div>
+                                    <div layout-right>Right Center Right</div>
+                                </div>
+                                <div layout-bottom height="50">Right Center Bottom</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div layout-bottom height="50">Bottom</div>
     </div>
     
 </div>
